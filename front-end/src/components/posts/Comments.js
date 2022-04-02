@@ -37,15 +37,6 @@ const Comments = ({ props, posts }) => {
   useEffect(() => {
     dispatch(getUsers(usersData));
   }, []);
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: ` http://localhost:4200/api/comment`,
-      withCredentials: true,
-    })
-      .then((res) => setComments(res.data))
-      .catch((err) => console.log(err));
-  }, [commentData, dispatch]);
 
   //dispatch(getComment(props));
   const handleComment = (e) => {
@@ -64,6 +55,16 @@ const Comments = ({ props, posts }) => {
         .then(() => setMessage(""));
     }
   };
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:4200/api/comment/${props}/allcomments`,
+      withCredentials: true,
+    })
+      .then((res) => setComments(res.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="comments-container">

@@ -22,7 +22,6 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
     checkAuthor();
   }, [uid, idComment]);
 
-  const a = idComment.id;
   const handleDelete = (e) => {
     dispatch(deleteComment(idComment.id));
   };
