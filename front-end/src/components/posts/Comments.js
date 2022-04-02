@@ -26,7 +26,6 @@ const Comments = ({ props, posts, id }) => {
 
   const dispatch = useDispatch();
 
-  console.log(commentData);
   useEffect(() => {
     axios({
       method: "get",

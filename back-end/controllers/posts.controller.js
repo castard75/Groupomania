@@ -26,6 +26,8 @@ exports.createPost = async (req, res, next) => {
     } catch (err) {
       return res.status(201).json(err);
     }
+  } else {
+    image_url = `hello`;
   }
 
   const data = {

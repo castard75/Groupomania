@@ -36,19 +36,7 @@ export const uploadPicture = (data, uid) => {
       data,
       withCredentials: true,
     })
-      .then((res) => {
-        return axios({
-          method: "get",
-          url: `http://localhost:4200/api/user/${uid}`,
-
-          withCredentials: true,
-        }).then((res) =>
-          dispatch({ type: UPLOAD_PICTURE, payload: res.data[0] })
-        );
-      })
-      .then(() => {
-        window.location = "/";
-      })
+      .then((res) => dispatch({ type: UPLOAD_PICTURE, payload: res.data }))
       .catch((err) => console.log(err));
   };
 };

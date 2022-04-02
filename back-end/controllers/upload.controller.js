@@ -45,9 +45,8 @@ module.exports.uploadProfil = async (req, res) => {
     //console.log(hashedPassword);
     if (err) {
       res.status(200).json({ err: "id non compatible" });
-    }
-    if (result) {
-      res.send({ message: "Profil mise à jour" });
+    } else {
+      res.status(200).json(result.data);
     }
   });
 };

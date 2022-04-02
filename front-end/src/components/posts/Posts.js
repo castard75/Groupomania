@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { UidContext } from "../AppContext";
@@ -14,11 +14,15 @@ const Posts = () => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
+    const a = "hello";
+
     if (post_text || image_url) {
       const data = new FormData();
       data.append("poster_id", uid);
       data.append("post_text", post_text);
+
       if (file) data.append("image_url", file);
+
       await dispatch(addPost(data));
       dispatch(getPosts());
       cancelPost();

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
-import { updateBio } from "../../actions/user.actions";
+import { getUser, updateBio } from "../../actions/user.actions";
 
 const UpdateProfil = () => {
   const [bio, setBio] = useState("");
