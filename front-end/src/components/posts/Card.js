@@ -13,9 +13,21 @@ const Card = ({ props }) => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdated, setTextupdated] = useState(null);
   const [showComments, setShowcomments] = useState(false);
+  const [test, setTest] = useState(false);
+  const [administrateur, setAdministrateur] = useState(false);
+  const obj = Object.assign({}, data);
+  const [admin, setAdmin] = useState([]);
   const dispatch = useDispatch();
 
   const uid = useContext(UidContext);
+
+  const handleUid = (uid) => {
+    if (uid) {
+      setTest(true);
+    }
+  };
+  handleUid();
+
   useEffect(() => {
     axios({
       method: "get",
@@ -25,6 +37,18 @@ const Card = ({ props }) => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
+  //tes
+
+  const testAdmin = data.find((element) => element.admin == 1);
+  console.log(testAdmin);
+
+  const handleAdmin = (testAdmin) => {
+    if (testAdmin === 1) {
+      setAdministrateur(true);
+    }
+  };
+  handleAdmin();
+  console.log(handleAdmin);
 
   const updateItem = () => {
     if (textUpdated) {
@@ -89,7 +113,7 @@ const Card = ({ props }) => {
               />
             )}
 
-            {uid === props.poster_id && (
+            {uid === props.poster_id && administrateur === false && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="logo-modification" />
@@ -97,6 +121,16 @@ const Card = ({ props }) => {
                 <DeleteCard id={props.id} />
               </div>
             )}
+
+            {uid && administrateur === true && (
+              <div className="button-container">
+                <div onClick={() => setIsUpdated(!isUpdated)}>
+                  <img src="./img/icons/edit.svg" alt="logo-modification" />
+                </div>
+                <DeleteCard id={props.id} />
+              </div>
+            )}
+
             <div className="card-footer">
               <div className="comment-icon">
                 <img
@@ -106,7 +140,7 @@ const Card = ({ props }) => {
                 />
               </div>
             </div>
-            {showComments && <Comments props={props.id} />}
+            {showComments && <Comments props={props.id} posts={props} />}
           </div>
         </>
       }

@@ -14,7 +14,7 @@ const SignInForm = () => {
     const passwordError = document.querySelector(".password.error");
 
     //Envoie du post login pour la connection
-
+    axios.defaults.withCredentials = true;
     axios({
       method: "post",
       url: "http://localhost:4200/api/auth/login",

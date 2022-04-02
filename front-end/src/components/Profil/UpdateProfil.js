@@ -8,6 +8,7 @@ const UpdateProfil = () => {
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
   const userData = useSelector((state) => state.userReducer);
+  const [dataUsers, setDataUsers] = useState([]);
   const dispatch = useDispatch();
 
   const handleUpdate = () => {
@@ -29,7 +30,7 @@ const UpdateProfil = () => {
             alt="user_picture"
           />
 
-          <UploadImg />
+          <UploadImg img={userData} />
         </div>
         <div className="right-part">
           <div className="bio-update">
