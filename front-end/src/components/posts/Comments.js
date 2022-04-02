@@ -46,9 +46,7 @@ const Comments = ({ props, posts, id }) => {
       method: "get",
       url: `http://localhost:4200/api/comment`,
       withCredentials: true,
-    })
-      .then(() => dispatch(getComment))
-      .catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
   }, [commentData, dispatch]);
 
   useEffect(() => {

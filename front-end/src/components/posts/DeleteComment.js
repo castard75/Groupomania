@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteComment } from "../../actions/comment.actions";
+import { deleteComment, getComment } from "../../actions/comment.actions";
 import { UidContext } from "../AppContext";
 import { useContext } from "react";
-
+import axios from "axios";
 const DeleteComment = ({ idComment, postId, postsId }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
   const [isAuthor, setIsAuthor] = useState(false);
   const [edit, setEdit] = useState(false);
-  console.log(userData.admin);
+
+  const b = idComment.id;
+
   const uid = useContext(UidContext);
   const handleEdit = (e) => {};
 
@@ -24,6 +26,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
 
   const handleDelete = (e) => {
     dispatch(deleteComment(idComment.id));
+    dispatch(getComment(postId));
   };
 
   console.log(idComment.id);

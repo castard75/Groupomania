@@ -122,15 +122,6 @@ const Card = ({ props }) => {
               </div>
             )}
 
-            {uid && administrateur === true && (
-              <div className="button-container">
-                <div onClick={() => setIsUpdated(!isUpdated)}>
-                  <img src="./img/icons/edit.svg" alt="logo-modification" />
-                </div>
-                <DeleteCard id={props.id} />
-              </div>
-            )}
-
             <div className="card-footer">
               <div className="comment-icon">
                 <img
