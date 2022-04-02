@@ -12,7 +12,7 @@ import { getUsers } from "../../actions/user.actions";
 import { getPosts } from "../../actions/post.actions";
 import DeleteComment from "./DeleteComment";
 
-const Comments = ({ props, posts }) => {
+const Comments = ({ props, posts, id }) => {
   const [message, setMessage] = useState("");
   const [dataUser, setDataUser] = useState([]);
 
@@ -21,9 +21,12 @@ const Comments = ({ props, posts }) => {
   const userData = useSelector((state) => state.userReducer);
   const getPost = useSelector((state) => state.postReducer);
   const commentData = useSelector((state) => state.commentReducer);
+  const a = useSelector((state) => state.commentReducer);
   const [comments, setComments] = useState([]);
+
   const dispatch = useDispatch();
 
+  console.log(commentData);
   useEffect(() => {
     axios({
       method: "get",
@@ -37,6 +40,27 @@ const Comments = ({ props, posts }) => {
   useEffect(() => {
     dispatch(getUsers(usersData));
   }, []);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:4200/api/comment`,
+      withCredentials: true,
+    })
+      .then(() => dispatch(getComment))
+      .catch((err) => console.log(err));
+  }, [commentData, dispatch]);
+
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: `http://localhost:4200/api/comment/${props}/allcomments`,
+      withCredentials: true,
+    })
+      .then((res) => setComments(res.data))
+      .then(() => dispatch(getComment))
+      .catch((err) => console.log(err));
+  }, [commentData, dispatch]);
 
   //dispatch(getComment(props));
   const handleComment = (e) => {
@@ -55,16 +79,6 @@ const Comments = ({ props, posts }) => {
         .then(() => setMessage(""));
     }
   };
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `http://localhost:4200/api/comment/${props}/allcomments`,
-      withCredentials: true,
-    })
-      .then((res) => setComments(res.data))
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <div className="comments-container">

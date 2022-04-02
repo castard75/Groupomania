@@ -26,6 +26,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
     dispatch(deleteComment(idComment.id));
   };
 
+  console.log(idComment.id);
   return (
     <div className="edit-comment">
       {isAuthor && edit === false && (
