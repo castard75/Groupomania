@@ -2,6 +2,7 @@ import axios from "axios";
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
+export const GET_ProfilPic = "GET_ProfilPic";
 export const UPDATE_BIO = "UPDATE_BIO";
 
 export const getUser = (uid) => {
@@ -28,7 +29,7 @@ export const getUsers = () => {
   };
 };
 
-export const uploadPicture = (data, uid) => {
+export const uploadPicture = (data, id) => {
   return (dispatch) => {
     return axios({
       method: "post",
@@ -36,7 +37,31 @@ export const uploadPicture = (data, uid) => {
       data,
       withCredentials: true,
     })
-      .then((res) => dispatch({ type: UPLOAD_PICTURE, payload: res.data }))
+      .then(() => {
+        return axios({
+          method: "get",
+          url: `http://localhost:4200/api/user/${id}`,
+
+          withCredentials: true,
+        });
+      })
+
+      .then((res) =>
+        dispatch({ type: UPLOAD_PICTURE, payload: res.data[0].photo_url })
+      )
+      .catch((err) => console.log(err));
+  };
+};
+
+export const getProfilPicture = (user_id) => {
+  return (dispatch) => {
+    return axios({
+      method: "get",
+      url: `http://localhost:4200/api/user/upload/${user_id}`,
+
+      withCredentials: true,
+    })
+      .then((res) => dispatch({ type: GET_ProfilPic, payload: res.data }))
       .catch((err) => console.log(err));
   };
 };

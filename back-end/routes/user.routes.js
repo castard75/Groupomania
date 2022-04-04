@@ -19,4 +19,5 @@ router.post(
   uploadController.uploadProfil
 );
 
+router.get("/upload/:id", auth, uploadController.getProfilPicture);
 module.exports = router;

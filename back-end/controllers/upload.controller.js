@@ -50,3 +50,16 @@ module.exports.uploadProfil = async (req, res) => {
     }
   });
 };
+
+exports.getProfilPicture = (req, res, next) => {
+  const { id: user_id } = req.params;
+  const sqlGetPicture = `SELECT photo_url FROM users WHERE users.user_id = ${user_id} `;
+  db.query(sqlGetPicture, (err, result) => {
+    if (err) {
+      res.status(200).json({ err: "erreur requête getPictureProfil" });
+    } else {
+      console.log(result);
+      res.status(200).json(result[0]);
+    }
+  });
+};

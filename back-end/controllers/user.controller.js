@@ -29,7 +29,6 @@ exports.getOneUser = (req, res, next) => {
       res.status(404).json({ err });
       throw err;
     } else {
-      console.log(result);
       res.status(200).json(result);
     }
   });

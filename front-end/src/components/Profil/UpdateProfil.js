@@ -2,42 +2,45 @@ import React, { useEffect, useState } from "react";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
-import { getUser, updateBio } from "../../actions/user.actions";
-
+import { updateBio } from "../../actions/user.actions";
+import axios from "axios";
 const UpdateProfil = () => {
   const [bio, setBio] = useState("");
   const [updateForm, setUpdateForm] = useState(false);
-  const userData = useSelector((state) => state.userReducer);
+  const userDatar = useSelector((state) => state.userReducer);
   const [dataUsers, setDataUsers] = useState([]);
   const dispatch = useDispatch();
 
   const handleUpdate = () => {
-    dispatch(updateBio(userData.user_id, bio));
+    dispatch(updateBio(userDatar.user_id, bio));
     setUpdateForm(false);
   };
 
+  console.log(dataUsers);
   return (
     <div className="profil-container">
       <LeftNav />
-      <h1>Profil de {userData.first_name}</h1>
+      <h1>Profil de {userDatar.first_name}</h1>
 
       <div className="update-container">
         <div className="left-part">
           <h3>Photo de profil</h3>
           <img
             crossOrigin="anonymous"
-            src={userData.photo_url}
+            src={userDatar.photo_url}
             alt="user_picture"
           />
 
-          <UploadImg img={userData} />
+          <UploadImg img={userDatar} />
         </div>
         <div className="right-part">
           <div className="bio-update">
             <h3>Bio</h3>
             {updateForm === false && (
               <>
-                <p onClick={() => setUpdateForm(!updateForm)}>{userData.Bio}</p>
+                <p onClick={() => setUpdateForm(!updateForm)}>
+                  {userDatar.Bio}
+                </p>
                 <button onClick={() => setUpdateForm(!updateForm)}>
                   Modifier bio{" "}
                 </button>
@@ -47,7 +50,7 @@ const UpdateProfil = () => {
               <>
                 <textarea
                   typeof="text"
-                  defaultValue={userData.Bio}
+                  defaultValue={userDatar.Bio}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>
                 <button onClick={handleUpdate}>Valider modification</button>

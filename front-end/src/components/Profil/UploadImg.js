@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, uploadPicture } from "../../actions/user.actions";
+import {
+  getProfilPicture,
+  getUser,
+  getUsers,
+  uploadPicture,
+} from "../../actions/user.actions";
 
-const UploadImg = () => {
+import { UidContext } from "../AppContext";
+import axios from "axios";
+
+const UploadImg = ({ img }) => {
+  const uid = useContext(UidContext);
   const [file, setFile] = useState();
   //c'est pour envoyer l'image et declencher une action
   const dispatch = useDispatch();
   //Je recupere la data de mon user
-  const userData = useSelector((state) => state.userReducer);
+  const userDataa = useSelector((state) => state.userReducer);
+  const a = useSelector((state) => state.userReducer);
 
-  const handlePicture = (e) => {
+  const handlePicture = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("name", userData.first_name);
-    data.append("userId", userData.user_id);
+    data.append("name", userDataa.first_name);
+    data.append("userId", userDataa.user_id);
     data.append("file", file);
 
-    dispatch(uploadPicture(data, userData.user_id));
-    dispatch(getUser(userData.user_id));
+    await dispatch(uploadPicture(data, img.user_id));
+    await dispatch(getUser(img.user_id));
   };
 
   return (

@@ -1,4 +1,9 @@
-import { GET_USER, UPDATE_BIO, UPLOAD_PICTURE } from "../actions/user.actions";
+import {
+  GET_ProfilPic,
+  GET_USER,
+  UPDATE_BIO,
+  UPLOAD_PICTURE,
+} from "../actions/user.actions";
 
 //le state stockera les données
 const initialState = {};
@@ -15,6 +20,8 @@ export default function userReducer(state = initialState, action) {
         photo_url: action.payload,
       };
 
+    case GET_ProfilPic:
+      return { photo_url: action.payload };
     case UPDATE_BIO:
       return {
         ...state,
