@@ -16,6 +16,22 @@ exports.getAllUsers = async (req, res) => {
   });
 };
 
+exports.getUser = (req, res, next) => {
+  //je veux chercher id dans le req params et je crée en mm temps une variable userId égale a ID pour aller lutiliser dans ma requête
+  //const { id: userId } = req.params;
+
+  const { id: userId } = req.params;
+  const sqlGetUser = `SELECT * FROM users WHERE users.user_id = ${userId};`;
+  db.query(sqlGetUser, (err, result) => {
+    if (err) {
+      res.status(404).json({ err });
+      throw err;
+    } else {
+      res.status(200).json(res.data);
+    }
+  });
+};
+
 exports.getOneUser = (req, res, next) => {
   //je veux chercher id dans le req params et je crée en mm temps une variable userId égale a ID pour aller lutiliser dans ma requête
   //const { id: userId } = req.params;

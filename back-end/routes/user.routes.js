@@ -9,7 +9,7 @@ const upload = multer();
 router.get("/", auth, userController.getAllUsers);
 router.get("/:id", auth, userController.getOneUser);
 router.put("/:id", auth, userController.updateOneUser);
-
+router.get("/:id", auth, userController.getUser);
 //Upload
 
 router.post(

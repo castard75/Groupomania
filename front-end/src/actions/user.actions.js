@@ -1,9 +1,22 @@
 import axios from "axios";
+export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
 export const UPLOAD_PICTURE = "UPLOAD_PICTURE";
 export const GET_ProfilPic = "GET_ProfilPic";
 export const UPDATE_BIO = "UPDATE_BIO";
+
+export const getAUser = (id) => {
+  return (dispatch) => {
+    return axios({
+      method: "get",
+      url: `http://localhost:4200/api/user/${id}`,
+      withCredentials: true,
+    })
+      .then((res) => dispatch({ type: GET_ONE_USER, payload: res.data[0] }))
+      .catch((err) => console.log(err));
+  };
+};
 
 export const getUser = (uid) => {
   return (dispatch) => {

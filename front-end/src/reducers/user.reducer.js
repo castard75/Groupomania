@@ -1,4 +1,5 @@
 import {
+  GET_ONE_USER,
   GET_ProfilPic,
   GET_USER,
   UPDATE_BIO,
@@ -13,6 +14,9 @@ export default function userReducer(state = initialState, action) {
     case GET_USER:
       return action.payload;
 
+    case GET_ONE_USER:
+      return action.payload;
+
     case UPLOAD_PICTURE:
       return {
         //je recupere tout ce qui est déja dans le state avec le spread opérator mais je change la donné dans picture
@@ -21,7 +25,7 @@ export default function userReducer(state = initialState, action) {
       };
 
     case GET_ProfilPic:
-      return { photo_url: action.payload };
+      return { ...state, photo_url: action.payload };
     case UPDATE_BIO:
       return {
         ...state,

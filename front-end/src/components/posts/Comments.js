@@ -21,7 +21,7 @@ const Comments = ({ props, posts, id }) => {
   const userData = useSelector((state) => state.userReducer);
   const getPost = useSelector((state) => state.postReducer);
   const commentData = useSelector((state) => state.commentReducer);
-  const a = useSelector((state) => state.commentReducer);
+
   const [comments, setComments] = useState([]);
 
   const dispatch = useDispatch();
