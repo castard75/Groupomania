@@ -13,8 +13,11 @@ const Card = ({ props }) => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdated, setTextupdated] = useState(null);
   const [showComments, setShowcomments] = useState(false);
+  const userData = useSelector((state) => state.userReducer);
   const [test, setTest] = useState(false);
+
   const [administrateur, setAdministrateur] = useState(false);
+
   const obj = Object.assign({}, data);
   const [admin, setAdmin] = useState([]);
   const dispatch = useDispatch();
@@ -38,17 +41,23 @@ const Card = ({ props }) => {
       .catch((err) => console.log(err));
   }, []);
   //tes
-
   const testAdmin = data.find((element) => element.admin == 1);
-  console.log(testAdmin);
 
-  const handleAdmin = (testAdmin) => {
-    if (testAdmin === 1) {
-      setAdministrateur(true);
+  const findAdmin = () => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i]["admin"] > 0) {
+      }
     }
   };
-  handleAdmin();
-  console.log(handleAdmin);
+
+  findAdmin();
+
+  const adminUser = () => {
+    if (userData.admin == 0) {
+      console.log("bonjour");
+    }
+  };
+  adminUser();
 
   const updateItem = () => {
     if (textUpdated) {
@@ -56,6 +65,7 @@ const Card = ({ props }) => {
     }
     setIsUpdated(false);
   };
+
   return (
     <li className="card-container" key={props.id}>
       {
@@ -113,7 +123,16 @@ const Card = ({ props }) => {
               />
             )}
 
-            {uid === props.poster_id && administrateur === false && (
+            {uid === props.poster_id && userData.admin == 0 && (
+              <div className="button-container">
+                <div onClick={() => setIsUpdated(!isUpdated)}>
+                  <img src="./img/icons/edit.svg" alt="logo-modification" />
+                </div>
+                <DeleteCard id={props.id} />
+              </div>
+            )}
+
+            {userData.admin == 1 && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="logo-modification" />
