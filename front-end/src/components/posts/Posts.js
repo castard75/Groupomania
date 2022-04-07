@@ -79,7 +79,7 @@ const Posts = () => {
                 <div className="pseudo">
                   <h3>{userData.first_name}</h3>
                 </div>
-                <span>{timestamp(Date.now())}</span>
+                <h4>{timestamp(Date.now())}</h4>
               </div>
               <div className="content">
                 <p>{post_text}</p>
@@ -102,13 +102,13 @@ const Posts = () => {
           </div>
           <div className="btn-send">
             {post_text || image_url ? (
-              <div className="cancel" onClick={cancelPost}>
+              <button className="cancel" onClick={cancelPost}>
                 Annuler
-              </div>
+              </button>
             ) : null}
-            <div className="send" onClick={handlePost}>
+            <button className="send" onClick={handlePost}>
               Envoyer
-            </div>
+            </button>
           </div>
         </div>
       </div>

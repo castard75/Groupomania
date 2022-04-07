@@ -4,6 +4,7 @@ export const GET_COMMENT = "GET_COMMENT";
 export const GET_ALL_COMMENT = "GET_ALL_COMMENT";
 export const ADD_COMMENT = "ADD_COMMENT";
 export const DELETE_COMMENT = "DELETE_COMMENT";
+export const UPDATE_COMMENT = "UPDATE_COMMENT";
 
 export const getComment = (postId) => {
   return (dispatch) => {
@@ -60,6 +61,24 @@ export const deleteComment = (commentId) => {
     })
       .then((res) => {
         dispatch({ type: DELETE_COMMENT, payload: { commentId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateComment = (commentId, message) => {
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: ` http://localhost:4200/api/comment/${commentId}`,
+      data: { message },
+      withCredentials: true,
+    })
+      .then((res) => {
+        dispatch({
+          type: UPDATE_COMMENT,
+          payload: { commentId, message },
+        });
       })
       .catch((err) => console.log(err));
   };

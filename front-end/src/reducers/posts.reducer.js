@@ -1,3 +1,4 @@
+import { UPDATE_COMMENT } from "../actions/comment.actions";
 import {
   ADD_POST,
   DELETE_POST,
@@ -18,6 +19,17 @@ export default function postReducer(state = initialState, action) {
           return {
             ...props,
             post_text: action.payload.post_text,
+          };
+        } else {
+          return props;
+        }
+      });
+    case UPDATE_COMMENT:
+      return state.map((props) => {
+        if (props.id === action.payload.post_id) {
+          return {
+            ...props,
+            message: action.payload.message,
           };
         } else {
           return props;

@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteComment, getComment } from "../../actions/comment.actions";
+import {
+  deleteComment,
+  getComment,
+  updateComment,
+} from "../../actions/comment.actions";
 import { UidContext } from "../AppContext";
 import { useContext } from "react";
 import axios from "axios";
@@ -9,11 +13,20 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
   const userData = useSelector((state) => state.userReducer);
   const [isAuthor, setIsAuthor] = useState(false);
   const [edit, setEdit] = useState(false);
-
+  const [message, setMessage] = useState("");
   const b = idComment.id;
 
   const uid = useContext(UidContext);
-  const handleEdit = (e) => {};
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    if (message) {
+      dispatch(updateComment(idComment.id, message));
+      dispatch(getComment(postId));
+      setMessage("");
+      setEdit(false);
+    }
+  };
 
   useEffect(() => {
     const checkAuthor = () => {
@@ -24,7 +37,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
     checkAuthor();
   }, [uid, idComment]);
 
-  const handleDelete = (e) => {
+  const handleDelete = () => {
     dispatch(deleteComment(idComment.id));
     dispatch(getComment(postId));
   };
@@ -42,6 +55,17 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
           <label htmlFor="text" onClick={() => setEdit(!edit)}>
             Editer
           </label>
+          <br />
+          <input
+            type="text"
+            name="message"
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            defaultValue={idComment.message}
+          />
+          <br />
+
           <div className="btn">
             <span
               onClick={() => {
@@ -52,6 +76,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
             >
               <img src="./img/icons/trash.svg " alt="corbeil" />
             </span>
+            <input type="submit" value="Valider modification" />
           </div>
         </form>
       )}
@@ -66,6 +91,16 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
           <label htmlFor="text" onClick={() => setEdit(!edit)}>
             Editer
           </label>
+          <br />
+          <input
+            id="noir"
+            type="text"
+            name="message"
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            defaultValue={idComment.message}
+          />
           <div className="btn">
             <span
               onClick={() => {
@@ -76,6 +111,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
             >
               <img src="./img/icons/trash.svg " alt="corbeil" />
             </span>
+            <input type="submit" value="Valider modification" />
           </div>
         </form>
       )}

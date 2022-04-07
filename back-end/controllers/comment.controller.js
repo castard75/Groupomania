@@ -61,3 +61,31 @@ exports.createComment = (req, res, next) => {
     res.status(200).json(result);
   });
 };
+
+exports.deleteComment = (req, res) => {
+  const commentId = req.params.id;
+  const sql = `DELETE FROM comment WHERE comment.id = ${commentId}`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      res.status(404).json({ err });
+      throw err;
+    }
+    res.status(200).json(result);
+  });
+};
+
+exports.updateComment = (req, res) => {
+  const commentId = req.params.id;
+  const { message } = req.body;
+
+  const sql = `UPDATE comment SET message = "${message}"
+  WHERE id = ${commentId};`;
+  db.query(sql, (err, result) => {
+    if (err) {
+      res.status(404).json({ err });
+      throw err;
+    } else {
+      res.status(200).json(result);
+    }
+  });
+};

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import LeftNav from "../LeftNav";
 import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "./UploadImg";
@@ -10,6 +11,7 @@ import {
 } from "../../actions/user.actions";
 import axios from "axios";
 import { UidContext } from "../AppContext";
+import cookie from "js-cookie";
 
 const UpdateProfil = () => {
   const uid = useContext(UidContext);
@@ -40,6 +42,26 @@ const UpdateProfil = () => {
     setUpdateForm(false);
   };
 
+  const removeCookie = (key) => {
+    //Si il y a un cookie on le supprime, le cookie expire en 1s
+    if (window !== "undefined") {
+      cookie.remove(key, { expires: 50 });
+    }
+  };
+
+  const handleDesactivate = async () => {
+    axios
+      .get(
+        `http://localhost:4200/api/auth/desactivateAccount/${userDatar.user_id}`
+      )
+      .then((res) => console.log(res))
+      .then(() => {
+        removeCookie("jwt");
+        window.location = "/";
+      })
+
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="profil-container">
       <LeftNav />
@@ -67,6 +89,8 @@ const UpdateProfil = () => {
                 <button onClick={() => setUpdateForm(!updateForm)}>
                   Modifier bio{" "}
                 </button>
+
+                <button onClick={handleDesactivate}>Desactiver compte </button>
               </>
             )}
             {updateForm === true && (

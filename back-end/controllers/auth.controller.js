@@ -127,12 +127,12 @@ exports.logout = (req, res) => {
 };
 
 exports.desactivateAccount = (req, res) => {
-  const userId = req.params.id;
+  const user_id = req.params.id;
   const sql = `UPDATE users u SET active=0 WHERE u.user_id = ?`;
   const db = dbc.getDB();
-  db.query(sql, userId, (err, results) => {
+  db.query(sql, user_id, (err, results) => {
     if (err) {
-      return res.status(404).json({ err });
+      res.status(404).json({ err });
     }
     res.clearCookie("jwt");
     res.status(200).json("Compte désactivé");
