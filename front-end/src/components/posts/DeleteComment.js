@@ -32,12 +32,36 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
   console.log(idComment.id);
   return (
     <div className="edit-comment">
-      {isAuthor && edit === false && (
+      {isAuthor && edit === false && userData.admin == 0 && (
         <span onClick={() => setEdit(!edit)}>
           <img src="./img/icons/edit.svg" alt="edit" />
         </span>
       )}
-      {isAuthor === true && edit === true && (
+      {isAuthor === true && edit === true && userData.admin == 0 && (
+        <form action="" onSubmit={handleEdit} className="edit-comment-form">
+          <label htmlFor="text" onClick={() => setEdit(!edit)}>
+            Editer
+          </label>
+          <div className="btn">
+            <span
+              onClick={() => {
+                if (window.confirm("voulez-vous supprimer ce commentaire ?")) {
+                  handleDelete();
+                }
+              }}
+            >
+              <img src="./img/icons/trash.svg " alt="corbeil" />
+            </span>
+          </div>
+        </form>
+      )}
+
+      {edit === false && userData.admin == 1 && (
+        <span onClick={() => setEdit(!edit)}>
+          <img src="./img/icons/edit.svg" alt="edit" />
+        </span>
+      )}
+      {userData.admin == 1 && edit === true && (
         <form action="" onSubmit={handleEdit} className="edit-comment-form">
           <label htmlFor="text" onClick={() => setEdit(!edit)}>
             Editer
