@@ -78,7 +78,6 @@ exports.login = async (req, res) => {
         if (err) return res.status(404).json({ err });
         /*Si la longueur du tableau est egale a 0 ca veut dire qu'il y a pas de mail trouvé*/
         if (result.length === 0) {
-          console.log("result");
           return res.status(200).json({ errorMail: "Utilisateur inconnue" });
         } else {
           const hashedPassword = result[0].password;
