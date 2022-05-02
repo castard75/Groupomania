@@ -8,7 +8,6 @@ const LeftNav = () => {
         <div className="icons-bis">
           <NavLink
             to="/"
-            exact
             className={(isActive) =>
               "active-left-nav" + (!isActive ? " unselected" : "")
             }
@@ -18,7 +17,6 @@ const LeftNav = () => {
           <br />
           <NavLink
             to="/Profil"
-            exact
             className={(isActive) =>
               "active-left-nav" + (!isActive ? " unselected" : "")
             }

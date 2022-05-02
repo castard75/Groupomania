@@ -14,8 +14,6 @@ const Posts = () => {
   const dispatch = useDispatch();
 
   const handlePost = async () => {
-    const a = "hello";
-
     if (post_text || image_url) {
       const data = new FormData();
       data.append("poster_id", uid);
@@ -43,22 +41,10 @@ const Posts = () => {
 
   return (
     <div className="post-container">
-      <div className="data">
-        <span> Publier</span>
-      </div>
-      <NavLink exact to="/Profil">
-        <div className="user-info">
-          <img
-            src={userData.photo_url}
-            crossOrigin="anonymous"
-            alt="profil-pic"
-          />
-        </div>
-      </NavLink>
       <div className="post-form">
         <textarea
           name="post_text"
-          maxlength="60"
+          maxLength="60"
           id="message"
           placeholder="Exprimez-vous"
           onChange={(e) => setPost_Text(e.target.value)}

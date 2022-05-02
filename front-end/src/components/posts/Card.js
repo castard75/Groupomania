@@ -123,7 +123,7 @@ const Card = ({ props }) => {
               />
             )}
 
-            {uid === props.poster_id && userData.admin == 0 && (
+            {uid === props.poster_id && !userData.admin && (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="logo-modification" />
@@ -132,13 +132,15 @@ const Card = ({ props }) => {
               </div>
             )}
 
-            {userData.admin == 1 && (
+            {userData.admin ? (
               <div className="button-container">
                 <div onClick={() => setIsUpdated(!isUpdated)}>
                   <img src="./img/icons/edit.svg" alt="logo-modification" />
                 </div>
                 <DeleteCard id={props.id} />
               </div>
+            ) : (
+              ""
             )}
 
             <div className="card-footer">

@@ -5,11 +5,7 @@ require("dotenv").config();
 const dbc = require("../config/db");
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
-const createToken = (email) => {
-  return jwt.sign({ email }, process.env.TOKEN_SECRET, {
-    expiresIn: maxAge,
-  });
-};
+
 exports.signup = async (req, res) => {
   //Recuperation du name,email et password de la requête avec la destructuration
   const { firstname, lastname, email, password } = req.body;

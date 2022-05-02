@@ -17,7 +17,7 @@ const SignUpForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const pseudoError = document.querySelector(".pseudo.error");
+    const passwordError = document.querySelector(".password-error");
     const emailError = document.querySelector(".email-error");
 
     /*if (email == null) {
@@ -38,8 +38,13 @@ const SignUpForm = () => {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.errorEmailMessage) {
-          emailError.innerHTML = res.data.errorEmailMessage;
+        if (res.data.error) {
+          emailError.style.color = "red";
+          emailError.innerHTML = res.data.error;
+          passwordError.innerHTML = "";
+        } else if (res.data.errorPassword) {
+          emailError.innerHTML = "";
+          passwordError.innerHTML = res.data.errorPassword;
         } else {
           setFormSubmit(true);
           console.log("Enregistrement réussi");
@@ -93,7 +98,9 @@ const SignUpForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
-          <div className="email-error"></div>
+          <div className="">
+            <span className="email-error"></span>
+          </div>
           <br />
 
           <label htmlFor="password">Mot de passe</label>
@@ -105,7 +112,9 @@ const SignUpForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <div className="pseudo-error"></div>
+          <div className="password-error">
+            <span className=""></span>
+          </div>
           <br />
 
           <input type="submit" value="valider inscription" />

@@ -7,14 +7,13 @@ import {
 } from "../../actions/comment.actions";
 import { UidContext } from "../AppContext";
 import { useContext } from "react";
-import axios from "axios";
+
 const DeleteComment = ({ idComment, postId, postsId }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
   const [isAuthor, setIsAuthor] = useState(false);
   const [edit, setEdit] = useState(false);
   const [message, setMessage] = useState("");
-  const b = idComment.id;
 
   const uid = useContext(UidContext);
 
@@ -81,10 +80,12 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
         </form>
       )}
 
-      {edit === false && userData.admin == 1 && (
+      {edit === false && userData.admin ? (
         <span onClick={() => setEdit(!edit)}>
           <img src="./img/icons/edit.svg" alt="edit" />
         </span>
+      ) : (
+        ""
       )}
       {userData.admin == 1 && edit === true && (
         <form action="" onSubmit={handleEdit} className="edit-comment-form">
