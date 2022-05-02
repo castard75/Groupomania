@@ -97,8 +97,8 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
             id="noir"
             type="text"
             name="message"
-            onChange={() => {
-              setMessage();
+            onChange={(e) => {
+              setMessage(e.target.value);
             }}
             defaultValue={idComment.message}
           />
