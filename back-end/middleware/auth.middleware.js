@@ -13,21 +13,21 @@ module.exports = async (req, res, next) => {
 
       //le decodedToken contient un user_id que je renomme idOfUser
       const { user_id: idOfUser } = decodedToken;
-      console.log(idOfUser);
+      const userId = decodedToken.user_id;
+      req.auth = { userId };
+      console.log(userId + "  req auth");
       const db = dbc.getDB();
       const sql = `SELECT user_id FROM users WHERE user_id = ${idOfUser}`;
 
       db.query(sql, async (err, result) => {
-        if (err) res.status(200).json({ err: "erreur" });
+        if (err) res.status(204).json({ err: "erreur" });
         else {
-          console.log(result[0].user_id);
-
           next();
         }
       });
     } else {
       res.clearCookie();
-      res.status(200).json({ message: "Unauthorized" });
+      res.status(401).json({ message: "Unauthorized" });
     }
   } catch (err) {
     res.clearCookie();

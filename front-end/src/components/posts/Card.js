@@ -15,12 +15,12 @@ const Card = ({ props }) => {
   const [showComments, setShowcomments] = useState(false);
   const userData = useSelector((state) => state.userReducer);
   const [test, setTest] = useState(false);
+  const dispatch = useDispatch();
 
   const [administrateur, setAdministrateur] = useState(false);
 
   const obj = Object.assign({}, data);
   const [admin, setAdmin] = useState([]);
-  const dispatch = useDispatch();
 
   const uid = useContext(UidContext);
 
@@ -52,16 +52,17 @@ const Card = ({ props }) => {
 
   findAdmin();
 
-  const adminUser = () => {
-    if (userData.admin == 0) {
-      console.log("bonjour");
-    }
-  };
-  adminUser();
+  // const adminUser = () => {
+  //   if (userData.admin == 0) {
+  //     console.log("bonjour");
+  //   }
+  // };
+  //adminUser();
 
   const updateItem = () => {
     if (textUpdated) {
       dispatch(updatePost(props.id, textUpdated));
+      console.log(uid + " UID");
     }
     setIsUpdated(false);
   };

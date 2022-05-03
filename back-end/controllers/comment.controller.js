@@ -64,19 +64,33 @@ exports.createComment = (req, res, next) => {
 
 exports.deleteComment = (req, res) => {
   const commentId = req.params.id;
-  const sql = `DELETE FROM comment WHERE comment.id = ${commentId}`;
-  db.query(sql, (err, result) => {
+  const verifySql = `SELECT author_id FROM comment WHERE id = ${commentId};`;
+
+  db.query(verifySql, (err, result) => {
     if (err) {
       res.status(404).json({ err });
       throw err;
     }
-    res.status(200).json(result);
+    console.log(result[0].author_id + " author author id");
+    if (result[0].author_id !== req.auth.userId) {
+      res.status(401).json({ error: "Suppresion Non autorisé" });
+    } else {
+      const sql = `DELETE FROM comment WHERE comment.id = ${commentId}`;
+      db.query(sql, (err, result) => {
+        if (err) {
+          res.status(404).json({ err });
+          throw err;
+        }
+        res.status(200).json(result);
+      });
+    }
   });
 };
 
 exports.updateComment = (req, res) => {
   const commentId = req.params.id;
   const { message } = req.body;
+  const verifySql = `SELECT author_id FROM comment WHERE id = ${commentId};`;
 
   const sql = `UPDATE comment SET message = "${message}"
   WHERE id = ${commentId};`;

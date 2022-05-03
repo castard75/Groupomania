@@ -27,7 +27,7 @@ exports.createPost = async (req, res, next) => {
       return res.status(201).json(err);
     }
   } else {
-    image_url = `hello`;
+    image_url = `no pic`;
   }
 
   const data = {
@@ -82,26 +82,56 @@ exports.getOnePost = async (req, res) => {
 
 exports.deleteOnePost = (req, res, next) => {
   const { id: post_id } = req.params;
-  const sql = `DELETE FROM posts WHERE posts.id= ${post_id}`;
-  db.query(sql, (err, result) => {
+  const verifySql = `SELECT poster_id FROM posts WHERE id = ${post_id};`;
+  db.query(verifySql, (err, result) => {
     if (err) {
       res.status(404).json({ err });
       throw err;
     }
-    res.status(200).json(result);
+    if (result[0].poster_id !== req.auth.userId) {
+      console.log(result[0].poster_id + "  poster");
+      console.log(req.auth.userId + "  id");
+
+      res.status(401).json({ error: "Suppresion Non autorisé" });
+    } else {
+      const sql = `DELETE FROM posts WHERE posts.id= ${post_id}`;
+      db.query(sql, (err, result) => {
+        if (err) {
+          res.status(404).json({ err });
+          throw err;
+        }
+        res.status(200).json(result);
+      });
+    }
   });
 };
 
 exports.updatePost = (req, res, next) => {
   const { id: post_id } = req.params;
   const { post_text } = req.body;
-  const sql = `UPDATE posts p SET post_text = "${post_text}"
-  WHERE id = ${post_id};`;
-  db.query(sql, (err, result) => {
+
+  const verifySql = `SELECT poster_id FROM posts WHERE id = ${post_id};`;
+  db.query(verifySql, (err, result) => {
     if (err) {
-      res.status(404).json({ err });
+      res.status(404).json({ err: "erreur" });
       throw err;
     }
-    res.status(200).json(result);
+
+    if (result[0].poster_id !== req.auth.userId) {
+      // console.log(result[0].poster_id + "  poster");
+      // console.log(req.auth.userId + "  id");
+
+      res.status(401).json({ error: "Non autorisé" });
+    } else {
+      const sql = `UPDATE posts p SET post_text = "${post_text}"
+    WHERE id = ${post_id};`;
+      db.query(sql, (err, result) => {
+        if (err) {
+          res.status(404).json({ err });
+          throw err;
+        }
+        res.status(200).json(result);
+      });
+    }
   });
 };
