@@ -111,6 +111,8 @@ exports.updatePost = (req, res, next) => {
   const { post_text } = req.body;
 
   const verifySql = `SELECT poster_id FROM posts WHERE id = ${post_id};`;
+
+  const admin = `SELECT user_id FROM users WHERE admin = 1 ;`;
   db.query(verifySql, (err, result) => {
     if (err) {
       res.status(404).json({ err: "erreur" });
@@ -121,7 +123,7 @@ exports.updatePost = (req, res, next) => {
       // console.log(result[0].poster_id + "  poster");
       // console.log(req.auth.userId + "  id");
 
-      res.status(401).json({ error: "Non autorisé" });
+      res.status(401).json({ error: "Modification non autorisé" });
     } else {
       const sql = `UPDATE posts p SET post_text = "${post_text}"
     WHERE id = ${post_id};`;
