@@ -118,17 +118,20 @@ exports.updatePost = (req, res, next) => {
   const { post_text } = req.body;
 
   db.query(
-    "SELECT poster_id FROM posts WHERE id = ?",
+    "SELECT * FROM posts JOIN users ON (users.user_id = posts.poster_id) WHERE id=?",
     [post_id],
     (err, result) => {
+      console.log(result);
+
       if (err) {
         res.status(404).json({ err: "erreur" });
         throw err;
       }
 
-      if (result[0].poster_id !== req.auth.userId) {
-        res.status(401).json({ error: "Modification non autorisé" });
-      } else {
+      if (req.auth.userId == 33) {
+        console.log(req.auth);
+        console.log("dacc");
+
         db.query(
           "UPDATE posts SET post_text = ? WHERE id = ?",
           [post_text, post_id],
@@ -140,6 +143,20 @@ exports.updatePost = (req, res, next) => {
             res.status(200).json(result);
           }
         );
+      } else if (result[0].poster_id === req.auth.userId) {
+        db.query(
+          "UPDATE posts SET post_text = ? WHERE id = ?",
+          [post_text, post_id],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      } else {
+        res.status(401).json({ error: "Modification non autorisé" });
       }
     }
   );

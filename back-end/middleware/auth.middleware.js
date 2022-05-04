@@ -14,7 +14,10 @@ module.exports = async (req, res, next) => {
       //le decodedToken contient un user_id que je renomme idOfUser
       const { user_id: idOfUser } = decodedToken;
       const userId = decodedToken.user_id;
+      const admin = 33;
       req.auth = { userId };
+      req.authentification = { admin };
+
       console.log(userId + "  req auth");
       const db = dbc.getDB();
       const sql = `SELECT user_id FROM users WHERE user_id = ${idOfUser}`;
