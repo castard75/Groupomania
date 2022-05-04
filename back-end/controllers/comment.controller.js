@@ -66,17 +66,15 @@ exports.deleteComment = (req, res) => {
   const commentId = req.params.id;
 
   db.query(
-    "SELECT author_id FROM comment WHERE id =?",
+    "SELECT * FROM comment JOIN users ON (users.user_id = comment.author_id) WHERE id=?",
     [commentId],
     (err, result) => {
       if (err) {
         res.status(404).json({ err });
         throw err;
       }
-      console.log(result[0].author_id + " author author id");
-      if (result[0].author_id !== req.auth.userId) {
-        res.status(401).json({ error: "Suppresion Non autorisé" });
-      } else {
+
+      if (req.auth.userId == 33) {
         db.query(
           "DELETE FROM comment WHERE comment.id =?",
           [commentId],
@@ -88,6 +86,20 @@ exports.deleteComment = (req, res) => {
             res.status(200).json(result);
           }
         );
+      } else if (result[0].author_id === req.auth.userId) {
+        db.query(
+          "DELETE FROM comment WHERE comment.id =?",
+          [commentId],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      } else {
+        res.status(401).json({ error: "Suppression non autorisé" });
       }
     }
   );
@@ -98,16 +110,15 @@ exports.updateComment = (req, res) => {
   const { message } = req.body;
 
   db.query(
-    "SELECT author_id FROM comment WHERE id =?",
+    "SELECT * FROM comment JOIN users ON (users.user_id = comment.author_id) WHERE id=?",
     [commentId],
     (err, result) => {
       if (err) {
         res.status(404).json({ err });
         throw err;
       }
-      if (result[0].author_id !== req.auth.userId) {
-        res.status(401).json({ error: "Modification Non autorisé" });
-      } else {
+
+      if (req.auth.userId == 33) {
         db.query(
           "UPDATE comment SET message =? WHERE id =?",
           [message, commentId],
@@ -120,6 +131,21 @@ exports.updateComment = (req, res) => {
             }
           }
         );
+      } else if (result[0].author_id === req.auth.userId) {
+        db.query(
+          "UPDATE comment SET message =? WHERE id =?",
+          [message, commentId],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            } else {
+              res.status(200).json(result);
+            }
+          }
+        );
+      } else {
+        res.status(401).json({ error: "Modification non autorisé" });
       }
     }
   );

@@ -96,7 +96,7 @@ exports.login = async (req, res) => {
             });
             res.cookie("jwt", token, {
               sameSite: "none",
-              secure: false,
+              secure: true,
             });
 
             res.status(200).json({
