@@ -91,12 +91,7 @@ exports.deleteOnePost = (req, res, next) => {
         res.status(404).json({ err });
         throw err;
       }
-      if (result[0].poster_id !== req.auth.userId) {
-        console.log(result[0].poster_id + "  poster");
-        console.log(req.auth.userId + "  id");
-
-        res.status(401).json({ error: "Suppresion Non autorisé" });
-      } else {
+      if (req.auth.userId == 33) {
         db.query(
           "DELETE FROM posts WHERE posts.id= ?",
           [post_id],
@@ -108,6 +103,20 @@ exports.deleteOnePost = (req, res, next) => {
             res.status(200).json(result);
           }
         );
+      } else if (result[0].poster_id === req.auth.userId) {
+        db.query(
+          "DELETE FROM posts WHERE posts.id= ?",
+          [post_id],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      } else {
+        res.status(401).json({ error: "Suppression non autorisé" });
       }
     }
   );
