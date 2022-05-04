@@ -82,58 +82,65 @@ exports.getOnePost = async (req, res) => {
 
 exports.deleteOnePost = (req, res, next) => {
   const { id: post_id } = req.params;
-  const verifySql = `SELECT poster_id FROM posts WHERE id = ${post_id};`;
-  db.query(verifySql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err });
-      throw err;
-    }
-    if (result[0].poster_id !== req.auth.userId) {
-      console.log(result[0].poster_id + "  poster");
-      console.log(req.auth.userId + "  id");
 
-      res.status(401).json({ error: "Suppresion Non autorisé" });
-    } else {
-      const sql = `DELETE FROM posts WHERE posts.id= ${post_id}`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          res.status(404).json({ err });
-          throw err;
-        }
-        res.status(200).json(result);
-      });
+  db.query(
+    "SELECT poster_id FROM posts WHERE id = ?",
+    [post_id],
+    (err, result) => {
+      if (err) {
+        res.status(404).json({ err });
+        throw err;
+      }
+      if (result[0].poster_id !== req.auth.userId) {
+        console.log(result[0].poster_id + "  poster");
+        console.log(req.auth.userId + "  id");
+
+        res.status(401).json({ error: "Suppresion Non autorisé" });
+      } else {
+        db.query(
+          "DELETE FROM posts WHERE posts.id= ?",
+          [post_id],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      }
     }
-  });
+  );
 };
 
 exports.updatePost = (req, res, next) => {
   const { id: post_id } = req.params;
   const { post_text } = req.body;
 
-  const verifySql = `SELECT poster_id FROM posts WHERE id = ${post_id};`;
+  db.query(
+    "SELECT poster_id FROM posts WHERE id = ?",
+    [post_id],
+    (err, result) => {
+      if (err) {
+        res.status(404).json({ err: "erreur" });
+        throw err;
+      }
 
-  const admin = `SELECT user_id FROM users WHERE admin = 1 ;`;
-  db.query(verifySql, (err, result) => {
-    if (err) {
-      res.status(404).json({ err: "erreur" });
-      throw err;
+      if (result[0].poster_id !== req.auth.userId) {
+        res.status(401).json({ error: "Modification non autorisé" });
+      } else {
+        db.query(
+          "UPDATE posts SET post_text = ? WHERE id = ?",
+          [post_text, post_id],
+          (err, result) => {
+            if (err) {
+              res.status(404).json({ err });
+              throw err;
+            }
+            res.status(200).json(result);
+          }
+        );
+      }
     }
-
-    if (result[0].poster_id !== req.auth.userId) {
-      // console.log(result[0].poster_id + "  poster");
-      // console.log(req.auth.userId + "  id");
-
-      res.status(401).json({ error: "Modification non autorisé" });
-    } else {
-      const sql = `UPDATE posts p SET post_text = "${post_text}"
-    WHERE id = ${post_id};`;
-      db.query(sql, (err, result) => {
-        if (err) {
-          res.status(404).json({ err });
-          throw err;
-        }
-        res.status(200).json(result);
-      });
-    }
-  });
+  );
 };
