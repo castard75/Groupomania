@@ -18,7 +18,9 @@
 
   .connection-form {
     border: none;
-    background: $color-4;
+    border-block: 5px black;
+    background: white;
+    box-shadow: 20px 20px 40px -6px rgba(0,0,0,0.2);
     min-width: 490px;
     width: 90%;
     text-align: center;
@@ -87,6 +89,7 @@
           font-size: 1.2rem;
           font-family: $font-2;
           border-radius: 20px;
+          box-shadow: 0 0 3px rgba(51, 51, 51, 0.2);
 
           &:focus {
             box-shadow: 0 0 3px rgba(51, 51, 51, 0.2);

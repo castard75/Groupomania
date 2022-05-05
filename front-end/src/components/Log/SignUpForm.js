@@ -19,7 +19,8 @@ const SignUpForm = () => {
 
     const passwordError = document.querySelector(".password-error");
     const emailError = document.querySelector(".email-error");
-
+    const firstnameError = document.querySelector(".firstname-error");
+    const lastnameError = document.querySelector(".lastname-error");
     /*if (email == null) {
       emailError.innerHTML = "veuillez rentrez un email";
     }*/
@@ -39,12 +40,25 @@ const SignUpForm = () => {
       .then((res) => {
         console.log(res);
         if (res.data.error) {
-          emailError.style.color = "red";
           emailError.innerHTML = res.data.error;
           passwordError.innerHTML = "";
+          firstnameError.innerHTML = "";
+          lastnameError.innerHTML = "";
         } else if (res.data.errorPassword) {
           emailError.innerHTML = "";
+          firstnameError.innerHTML = "";
+          lastnameError.innerHTML = "";
           passwordError.innerHTML = res.data.errorPassword;
+        } else if (res.data.errorFirstname) {
+          emailError.innerHTML = "";
+          lastnameError.innerHTML = "";
+          passwordError.innerHTML = "";
+          firstnameError.innerHTML = res.data.errorFirstname;
+        } else if (res.data.errorLastname) {
+          emailError.innerHTML = "";
+          firstnameError.innerHTML = "";
+          passwordError.innerHTML = "";
+          lastnameError.innerHTML = res.data.errorLastname;
         } else {
           setFormSubmit(true);
           console.log("Enregistrement réussi");
@@ -74,7 +88,9 @@ const SignUpForm = () => {
             onChange={(e) => setFirstname(e.target.value)}
             value={firstname}
           />
-          <div className="pseudo-error"></div>
+          <div className="">
+            <span className="firstname-error" style={{ color: "red" }}></span>
+          </div>
           <br />
 
           <label htmlFor="lastname">Nom </label>
@@ -86,7 +102,9 @@ const SignUpForm = () => {
             onChange={(e) => setLastname(e.target.value)}
             value={lastname}
           />
-          <div className="pseudo-error"></div>
+          <div className="">
+            <span className="lastname-error" style={{ color: "red" }}></span>
+          </div>
           <br />
 
           <label htmlFor="Email">Email</label>
@@ -99,7 +117,7 @@ const SignUpForm = () => {
             value={email}
           />
           <div className="">
-            <span className="email-error"></span>
+            <span className="email-error" style={{ color: "red" }}></span>
           </div>
           <br />
 
@@ -112,7 +130,7 @@ const SignUpForm = () => {
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
-          <div className="password-error">
+          <div className="password-error" style={{ color: "red" }}>
             <span className=""></span>
           </div>
           <br />
