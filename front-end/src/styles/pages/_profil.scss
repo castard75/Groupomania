@@ -1,3 +1,8 @@
+.container-pic{
+  display: flex;
+justify-content: center;
+}
+
 .profil-page {
   margin: 80px auto 0;
   max-width: 1200px;
@@ -84,6 +89,7 @@
       }
       form {
         input {
+          opacity: inherit;
           padding: 14px 20px;
           margin: 0;
           font-size: 1.2rem;
@@ -161,8 +167,7 @@
         position: relative;
 
         label {
-          position: absolute;
-          transform: translate(-50%, -50%);
+          opacity: inherit;
           width: 270px;
           background: $color-3;
           color: $color-2;
@@ -174,17 +179,16 @@
           cursor: pointer;
         }
         input[type="file"] {
-          position: absolute;
-          opacity: 1;
-          transform: translate(-3px, -50%);
+          
           cursor: pointer;
           padding: 10px 20px;
 
           @media screen and(max-width: 1121px) {
-            opacity: 0;
+          
           }
         }
         input[type="submit"] {
+          opacity: inherit;
           margin-top: 10px;
           border-radius: 20px;
 

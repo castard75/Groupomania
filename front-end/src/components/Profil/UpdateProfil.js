@@ -88,7 +88,17 @@ const UpdateProfil = () => {
                   Modifier bio{" "}
                 </button>
 
-                <button onClick={handleDesactivate}>Desactiver compte </button>
+                <button
+                  onClick={() => {
+                    if (
+                      window.confirm("voulez-vous supprimer votre compte ?")
+                    ) {
+                      handleDesactivate();
+                    }
+                  }}
+                >
+                  Supprimer compte{" "}
+                </button>
               </>
             )}
             {updateForm === true && (
