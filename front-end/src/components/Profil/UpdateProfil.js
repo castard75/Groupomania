@@ -90,6 +90,12 @@ const UpdateProfil = () => {
 
                 <button
                   onClick={() => {
+                    if (userDatar.admin) {
+                      window.alert(
+                        "Suppression du compte administrateur non autorisé"
+                      );
+                      return false;
+                    }
                     if (
                       window.confirm("voulez-vous supprimer votre compte ?")
                     ) {

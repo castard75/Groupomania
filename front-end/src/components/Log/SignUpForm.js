@@ -39,8 +39,8 @@ const SignUpForm = () => {
     })
       .then((res) => {
         console.log(res);
-        if (res.data.error) {
-          emailError.innerHTML = res.data.error;
+        if (res.data.errorEmailMessage) {
+          emailError.innerHTML = res.data.errorEmailMessage;
           passwordError.innerHTML = "";
           firstnameError.innerHTML = "";
           lastnameError.innerHTML = "";
