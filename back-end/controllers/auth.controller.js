@@ -73,8 +73,11 @@ exports.login = async (req, res) => {
       async (err, result) => {
         if (err) return res.status(404).json({ err });
         /*Si la longueur du tableau est egale a 0 ca veut dire qu'il y a pas de mail trouvé*/
+        console.log(result);
         if (result.length === 0) {
-          return res.status(200).json({ errorMail: "Utilisateur inconnue" });
+          return res
+            .status(200)
+            .json({ errorMail: "Email ou Mot de passe inconnue" });
         } else {
           const hashedPassword = result[0].password;
           console.log(result[0].password);
@@ -86,7 +89,7 @@ exports.login = async (req, res) => {
             //res.clearCookie("jwt");
             return res
               .status(200)
-              .json({ errorPassword: "Mot de passe incorrect" });
+              .json({ errorPassword: "Email ou Mot de passe inconnue" });
           } else {
             delete result[0].password;
             const { user_id } = result[0];
@@ -127,7 +130,7 @@ exports.desactivateAccount = (req, res) => {
   const db = dbc.getDB();
   db.query(sql, user_id, (err, results) => {
     if (err) {
-      res.status(404).json({ err });
+      throw err;
     }
     res.clearCookie("jwt");
     res.status(200).json("Compte désactivé");

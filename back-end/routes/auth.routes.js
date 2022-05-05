@@ -17,6 +17,6 @@ router.post(
 );
 router.post("/login", authController.login);
 router.get("/logout", authController.logout);
-router.get("/desactivateAccount/:id", authController.desactivateAccount);
+router.delete("/desactivateAccount/:id", authController.desactivateAccount);
 
 module.exports = router;

@@ -31,11 +31,14 @@ const SignInForm = () => {
           console.log(res.data.errorPassword);
           emailError.innerHTML = "";
           passwordError.innerHTML = res.data.errorPassword;
-        } else if (res.data.errorEmail) {
-          emailError.innerHTML = res.data.errorEmail;
+          return false;
+        } else if (res.data.errorMail) {
+          emailError.innerHTML = res.data.errorMail;
           passwordError.innerHTML = "";
+          return false;
         } else {
           window.location = "/";
+          return true;
         }
       })
       .catch((err) => {

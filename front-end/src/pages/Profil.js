@@ -10,7 +10,7 @@ const Profil = () => {
       {uid ? (
         <UpdateProfil />
       ) : (
-        <div className="container">
+        <div className="log-container">
           <Modal signin={false} signup={true} />
         </div>
       )}

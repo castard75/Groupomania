@@ -51,9 +51,7 @@ const UpdateProfil = () => {
 
   const handleDesactivate = async () => {
     axios
-      .get(
-        `http://localhost:4200/api/auth/desactivateAccount/${userDatar.user_id}`
-      )
+      .delete(`http://localhost:4200/api/auth/desactivateAccount/${uid}`)
       .then((res) => console.log(res))
       .then(() => {
         removeCookie("jwt");
