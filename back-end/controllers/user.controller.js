@@ -80,7 +80,7 @@ exports.updateOneUser = async (req, res) => {
       res.status(200).json({ err: "id non compatible" });
     }
     if (result) {
-      res.send({ message: "Profil mise à jour" });
+      res.status(200).json({ message: "Profil mise à jour" });
     }
   });
 };

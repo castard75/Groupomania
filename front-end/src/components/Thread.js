@@ -5,16 +5,12 @@ import { isEmpty } from "./Utils";
 import Card from "./posts/Card";
 
 const Thread = () => {
-  const [loadPost, setLoadPost] = useState(true);
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postReducer);
 
   useEffect(() => {
-    if (loadPost) {
-      dispatch(getPosts());
-      setLoadPost(false);
-    }
-  }, [loadPost, dispatch]);
+    dispatch(getPosts());
+  }, []);
 
   return (
     <div className="thread-container">

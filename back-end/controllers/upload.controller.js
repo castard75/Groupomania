@@ -28,7 +28,7 @@ module.exports.uploadProfil = async (req, res) => {
 
   const token = req.cookies.jwt;
   const decodedToken = jwt.verify(token, process.env.TOKEN_SECRET);
-  //console.log(decodedToken);
+
   const userId = decodedToken.user_id;
 
   let { file } = req;

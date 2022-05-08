@@ -8,7 +8,7 @@ import {
 import { UidContext } from "../AppContext";
 import { useContext } from "react";
 
-const DeleteComment = ({ idComment, postId, postsId }) => {
+const DeleteComment = ({ idComment, postId }) => {
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.userReducer);
   const [isAuthor, setIsAuthor] = useState(false);
@@ -52,7 +52,7 @@ const DeleteComment = ({ idComment, postId, postsId }) => {
       {isAuthor === true && edit === true && userData.admin == 0 && (
         <form action="" onSubmit={handleEdit} className="edit-comment-form">
           <label htmlFor="text" onClick={() => setEdit(!edit)}>
-            Editer
+            Annuler
           </label>
           <br />
           <input

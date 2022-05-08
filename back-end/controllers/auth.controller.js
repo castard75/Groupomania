@@ -132,6 +132,7 @@ exports.desactivateAccount = (req, res) => {
     if (err) {
       throw err;
     }
+    //On retire l'information du cookie
     res.clearCookie("jwt");
     res.status(200).json("Compte supprimé");
   });

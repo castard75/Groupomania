@@ -14,22 +14,10 @@ const Card = ({ props }) => {
   const [textUpdated, setTextupdated] = useState(null);
   const [showComments, setShowcomments] = useState(false);
   const userData = useSelector((state) => state.userReducer);
-  const [test, setTest] = useState(false);
+
   const dispatch = useDispatch();
 
-  const [administrateur, setAdministrateur] = useState(false);
-
-  const obj = Object.assign({}, data);
-  const [admin, setAdmin] = useState([]);
-
   const uid = useContext(UidContext);
-
-  const handleUid = (uid) => {
-    if (uid) {
-      setTest(true);
-    }
-  };
-  handleUid();
 
   useEffect(() => {
     axios({
@@ -40,24 +28,6 @@ const Card = ({ props }) => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   }, []);
-  //tes
-  const testAdmin = data.find((element) => element.admin == 1);
-
-  const findAdmin = () => {
-    for (let i = 0; i < data.length; i++) {
-      if (data[i]["admin"] > 0) {
-      }
-    }
-  };
-
-  findAdmin();
-
-  // const adminUser = () => {
-  //   if (userData.admin == 0) {
-  //     console.log("bonjour");
-  //   }
-  // };
-  //adminUser();
 
   const updateItem = () => {
     if (textUpdated) {

@@ -115,7 +115,7 @@ const Comments = ({ props, posts, id }) => {
               <DeleteComment
                 idComment={commentaire}
                 postId={props}
-                postsId={posts}
+                // postsId={posts}
               />
             </div>
           </div>

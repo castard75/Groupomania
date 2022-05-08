@@ -14,30 +14,30 @@ export default function postReducer(state = initialState, action) {
       return action.payload;
 
     case UPDATE_POST:
-      return state.map((props) => {
-        if (props.id === action.payload.post_id) {
+      return state.map((post) => {
+        if (post.id === action.payload.post_id) {
           return {
-            ...props,
+            ...post,
             post_text: action.payload.post_text,
           };
         } else {
-          return props;
+          return post;
         }
       });
     case UPDATE_COMMENT:
-      return state.map((props) => {
-        if (props.id === action.payload.post_id) {
+      return state.map((post) => {
+        if (post.id === action.payload.post_id) {
           return {
-            ...props,
+            ...post,
             message: action.payload.message,
           };
         } else {
-          return props;
+          return post;
         }
       });
 
     case DELETE_POST:
-      return state.filter((props) => props.id !== action.payload.post_id);
+      return state.filter((post) => post.id !== action.payload.post_id);
     default:
       return state;
   }

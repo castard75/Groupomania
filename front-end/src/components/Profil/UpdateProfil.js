@@ -33,10 +33,6 @@ const UpdateProfil = () => {
       .catch((err) => console.log(err));
   }, [userDatar, dispatch]);
 
-  useEffect(() => {
-    dispatch(getAUser(uid));
-  }, [uid, dispatch]);
-
   const handleUpdate = () => {
     dispatch(updateBio(userDatar.user_id, bio));
     setUpdateForm(false);
