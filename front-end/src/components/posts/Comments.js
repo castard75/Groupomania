@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
-import { dateParser, isEmpty } from "../Utils";
-import {
-  addComment,
-  getComment,
-  getallComment,
-} from "../../actions/comment.actions";
+import { timestamp } from "../Utils";
+import { addComment, getComment } from "../../actions/comment.actions";
 import { getUsers } from "../../actions/user.actions";
 import { getPosts } from "../../actions/post.actions";
 import DeleteComment from "./DeleteComment";
@@ -25,28 +21,6 @@ const Comments = ({ props, posts, id }) => {
   const [comments, setComments] = useState([]);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: "http://localhost:4200/api/user/",
-      withCredentials: true,
-    })
-      .then((res) => setDataUser(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    dispatch(getUsers(usersData));
-  }, []);
-
-  useEffect(() => {
-    axios({
-      method: "get",
-      url: `http://localhost:4200/api/comment`,
-      withCredentials: true,
-    }).catch((err) => console.log(err));
-  }, [commentData, dispatch]);
 
   useEffect(() => {
     axios({
@@ -71,6 +45,7 @@ const Comments = ({ props, posts, id }) => {
             withCredentials: true,
           })
             .then((res) => setComments(res.data))
+
             .catch((err) => console.log(err));
         })
         .then(() => setMessage(""));
@@ -109,7 +84,7 @@ const Comments = ({ props, posts, id }) => {
                       .join("")}
                   </h3>
                 </div>
-                <span>{dateParser(commentaire.created_at)}</span>
+                <span>{timestamp(Date.now())}</span>
               </div>
               <p>{commentaire.message}</p>
               <DeleteComment

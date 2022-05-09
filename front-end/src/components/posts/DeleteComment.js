@@ -25,6 +25,9 @@ const DeleteComment = ({ idComment, postId }) => {
       setMessage("");
       setEdit(false);
     }
+    if (!message) {
+      alert("veuillez modifier votre texte ou l'annulez");
+    }
   };
 
   useEffect(() => {
@@ -90,7 +93,7 @@ const DeleteComment = ({ idComment, postId }) => {
       {userData.admin == 1 && edit === true && (
         <form action="" onSubmit={handleEdit} className="edit-comment-form">
           <label htmlFor="text" onClick={() => setEdit(!edit)}>
-            Editer
+            Annuler
           </label>
           <br />
           <input

@@ -10,20 +10,17 @@ exports.signup = async (req, res) => {
   //Recuperation du name,email et password de la requête avec la destructuration
   const { firstname, lastname, email, password } = req.body;
 
-  //Generating salt for Hashing 10 tour de l'algorithme
   const salt = await bcrypt.genSalt(8);
 
   //Mot de passe Hashé
   const hashedPassword = await bcrypt.hash(password, salt);
   const db = dbc.getDB();
 
-  //on regarde dans la base de données quel email est la meme que celle de la requête.On prend la valeur email depuis le formulaire et on le passe dans un tableau
   db.query(
     "SELECT email from users where email = ?",
     [email],
     (err, results) => {
-      console.log(results);
-      //Cela signifie que si results est plus grand que 0 , ca veut dire que il y a déja l'email dans la database
+      // si results est plus grand que 0  il y a déja l'email dans la database
       if (results.length > 0) {
         return res.status(200).json({ errorEmailMessage: "Déja enregistré" });
       } else {
@@ -47,9 +44,6 @@ exports.signup = async (req, res) => {
                 result: result.insertId,
               });
             }
-            //Si tout est ok on redirige sur la page Login
-
-            //
           }
         );
       }
@@ -59,8 +53,6 @@ exports.signup = async (req, res) => {
 
 //LOGIN
 exports.login = async (req, res) => {
-  //const { email, user_password: clearPassword } = req.body;
-
   const db = dbc.getDB();
   try {
     const email = req.body.email;
@@ -82,11 +74,8 @@ exports.login = async (req, res) => {
           const hashedPassword = result[0].password;
           console.log(result[0].password);
 
-          //recuperation du mot de passe hashé du resultat
-
           const match = await bcrypt.compareSync(password, hashedPassword);
           if (!match) {
-            //res.clearCookie("jwt");
             return res
               .status(200)
               .json({ errorPassword: "Email ou Mot de passe inconnue" });
@@ -118,7 +107,6 @@ exports.login = async (req, res) => {
   }
 };
 
-//Le cookie s'appel jwt , son contenu est vide et le maxAge durera 1 millisecondes pour qu'il disparaisse
 exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
