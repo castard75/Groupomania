@@ -7,6 +7,7 @@ const SignInForm = () => {
   const [password, setPassword] = useState("");
 
   let navigate = useNavigate();
+
   //Partie logique on gère le login
   const handleLogin = (e) => {
     e.preventDefault();
@@ -21,7 +22,6 @@ const SignInForm = () => {
       withCredentials: true,
 
       data: {
-        //on passe les données contenue dans le useState
         email: email,
         password: password,
       },

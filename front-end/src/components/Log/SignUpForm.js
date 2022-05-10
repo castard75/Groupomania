@@ -21,16 +21,12 @@ const SignUpForm = () => {
     const emailError = document.querySelector(".email-error");
     const firstnameError = document.querySelector(".firstname-error");
     const lastnameError = document.querySelector(".lastname-error");
-    /*if (email == null) {
-      emailError.innerHTML = "veuillez rentrez un email";
-    }*/
 
     axios({
       method: "post",
       url: "http://localhost:4200/api/auth/signup",
 
       data: {
-        //on passe les données contenue dans le useState
         firstname: firstname,
         lastname: lastname,
         email: email,
@@ -72,7 +68,6 @@ const SignUpForm = () => {
       .catch((err) => console.log(err));
   };
 
-  //Si le formulaire est soumis on le passe sur true dans la requête axios sinon on affiche le formulaire de connexion
   return (
     <>
       {formSubmit ? (
