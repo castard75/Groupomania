@@ -36,13 +36,12 @@ module.exports.uploadProfil = async (req, res) => {
   if (file) {
     photoProfil = `${req.protocol}://${req.get("host")}/images/${fileName}`;
   }
-  // "./uploads/profil/" + fileName
+
   if (!file) photoProfil = "NULL";
   id = req.body.user_id;
   const sqlUpdateUser = `UPDATE users SET photo_url = " ${photoProfil}"
    WHERE user_id = ${userId};`;
   db.query(sqlUpdateUser, (err, result) => {
-    //console.log(hashedPassword);
     if (err) {
       res.status(200).json({ err: "id non compatible" });
     } else {

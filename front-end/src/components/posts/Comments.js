@@ -4,15 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { timestamp } from "../Utils";
 import { addComment, getComment } from "../../actions/comment.actions";
-import { getUsers } from "../../actions/user.actions";
-import { getPosts } from "../../actions/post.actions";
+
 import DeleteComment from "./DeleteComment";
 
 const Comments = ({ props, posts, id }) => {
   const [message, setMessage] = useState("");
   const [dataUser, setDataUser] = useState([]);
 
-  const test = Object.assign({}, dataUser);
   const usersData = useSelector((state) => state.usersReducer);
   const userData = useSelector((state) => state.userReducer);
   const getPost = useSelector((state) => state.postReducer);

@@ -8,11 +8,11 @@ const UploadImg = () => {
   const dispatch = useDispatch();
   //Je recupere la data de mon user
   const userData = useSelector((state) => state.userReducer);
-  const tes = "helloa";
+  const pic = "photo";
   const handlePicture = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append("name", tes);
+    data.append("name", pic);
     data.append("userId", userData.user_id);
     data.append("file", file);
 

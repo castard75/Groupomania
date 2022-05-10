@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { isEmpty } from "./Utils";
 import Card from "./posts/Card";
 
-const Thread = () => {
+const Publications = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.postReducer);
 
@@ -24,4 +24,4 @@ const Thread = () => {
   );
 };
 
-export default Thread;
+export default Publications;

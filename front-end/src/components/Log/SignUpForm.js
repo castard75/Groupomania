@@ -44,6 +44,11 @@ const SignUpForm = () => {
           passwordError.innerHTML = "";
           firstnameError.innerHTML = "";
           lastnameError.innerHTML = "";
+        } else if (res.data.errorMail) {
+          emailError.innerHTML = res.data.errorMail;
+          passwordError.innerHTML = "";
+          firstnameError.innerHTML = "";
+          lastnameError.innerHTML = "";
         } else if (res.data.errorPassword) {
           emailError.innerHTML = "";
           firstnameError.innerHTML = "";

@@ -1,11 +1,11 @@
 import React from "react";
 import LeftNav from "../components/LeftNav";
 import Posts from "../components/posts/Posts";
-import Thread from "../components/Thread";
 import { useState, useContext } from "react";
 import { UidContext } from "../components/AppContext";
-import SigninForm from "../components/Log/SignInForm";
+
 import Modal from "../components/Log/Modal";
+import Publications from "../components/Publications";
 
 const Home = () => {
   const uid = useContext(UidContext);
@@ -22,7 +22,7 @@ const Home = () => {
           ) : null}
         </div>
 
-        <Thread />
+        <Publications />
       </div>
     </div>
   );

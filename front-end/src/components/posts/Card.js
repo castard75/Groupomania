@@ -29,6 +29,7 @@ const Card = ({ props }) => {
       .catch((err) => console.log(err));
   }, []);
 
+  //Fonction mise à jour post
   const updateItem = () => {
     if (textUpdated) {
       dispatch(updatePost(props.id, textUpdated));
@@ -45,15 +46,12 @@ const Card = ({ props }) => {
             <img
               key={props.user_id}
               crossOrigin="anonymous"
-              src={
-                !isEmpty(data[0]) &&
-                data
-                  .map((user) => {
-                    if (user.user_id === props.poster_id) return user.photo_url;
-                    else return null;
-                  })
-                  .join("")
-              }
+              src={data
+                .map((user) => {
+                  if (user.user_id === props.poster_id) return user.photo_url;
+                  else return null;
+                })
+                .join("")}
               alt="poster-pic"
             />
           </div>
